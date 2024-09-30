@@ -1,5 +1,5 @@
 {
-    "name": "attendize/attendize",
+    "name": "ticket/ticketsystem",
     "version": "2.8.0",
     "description": "A free and open-source event management and ticket selling application.",
     "keywords": [
@@ -10,9 +10,8 @@
     ],
     "license": "AAL",
     "type": "project",
-    "homepage": "https://www.attendize.com",
     "require": {
-        "php": "^7.3",
+        "php": "^8.0",
         "ext-json": "*",
         "doctrine/dbal": "^2.9",
         "dompdf/dompdf": "^0.8",
