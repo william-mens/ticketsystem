@@ -10,6 +10,10 @@ use App\Models\Order;
 class GenerateTicketsJob extends GenerateTicketsJobBase
 {
     public $order;
+    public $attendees;
+    public $event;
+    public $file_name;
+
 
     /**
      * Create a new job instance.
@@ -22,5 +26,6 @@ class GenerateTicketsJob extends GenerateTicketsJobBase
         $this->event = $order->event;
         $this->file_name = $order->order_reference;
         $this->order = $order;
+        \Log::info("passed generate TicketsJobs");
     }
 }
