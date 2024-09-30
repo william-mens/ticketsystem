@@ -13,7 +13,7 @@ class Ticket extends MyBaseModel
 {
     use SoftDeletes;
 
-    protected $dates = ['start_sale_date', 'end_sale_date'];
+    protected $casts = ['start_sale_date' => 'datetime', 'end_sale_date' => 'datetime'];
 
     protected $quantity_reserved_cache = null;
 
@@ -29,9 +29,9 @@ class Ticket extends MyBaseModel
             'title'              => 'required',
             'price'              => 'required|numeric|min:0',
             'description'        => 'nullable',
-            'start_sale_date'    => 'nullable|date_format:"'.$format.'"',
-            'end_sale_date'      => 'nullable|date_format:"'.$format.'"|after:start_sale_date',
-            'quantity_available' => 'nullable|integer|min:'.($this->quantity_sold + $this->quantity_reserved)
+            'start_sale_date'    => 'nullable|date_format:"' . $format . '"',
+            'end_sale_date'      => 'nullable|date_format:"' . $format . '"|after:start_sale_date',
+            'quantity_available' => 'nullable|integer|min:' . ($this->quantity_sold + $this->quantity_reserved)
         ];
     }
 
@@ -97,9 +97,7 @@ class Ticket extends MyBaseModel
     /**
      * TODO:implement the reserved method.
      */
-    public function reserved()
-    {
-    }
+    public function reserved() {}
 
     /**
      * Parse start_sale_date to a Carbon instance

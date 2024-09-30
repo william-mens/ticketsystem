@@ -2,6 +2,7 @@
 .DS_Store
 .env
 .env.backup
+composerssss.lock
 .idea
 .phpunit.result.cache
 .vscode/

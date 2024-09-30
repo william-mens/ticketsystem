@@ -38,7 +38,9 @@ class SendOrderConfirmationJob implements ShouldQueue
      */
     public function handle()
     {
-        GenerateTicketsJob::dispatchNow($this->order);
+        //updating
+        \Log::info("reached here in my local debugging");
+        GenerateTicketsJob::dispatchSync($this->order);
         $mail = new SendOrderConfirmationMail($this->order, $this->orderService);
         Mail::to($this->order->email)
             ->locale(Config::get('app.locale'))
