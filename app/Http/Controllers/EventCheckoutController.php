@@ -277,6 +277,7 @@ class EventCheckoutController extends Controller
         if ($this->is_embedded) {
             return view('Public.ViewEvent.Embedded.EventPageCheckout', $data);
         }
+        \Log::info("calling Public.ViewEvent.EventPageCheckout", [$data]);
 
         return view('Public.ViewEvent.EventPageCheckout', $data);
     }
