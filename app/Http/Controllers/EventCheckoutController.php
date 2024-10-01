@@ -277,7 +277,7 @@ class EventCheckoutController extends Controller
         if ($this->is_embedded) {
             return view('Public.ViewEvent.Embedded.EventPageCheckout', $data);
         }
-        \Log::info("calling Public.ViewEvent.EventPageCheckout", [$data]);
+        \Log::info("calling Public.ViewEvent.EventPageCheckout");
 
         return view('Public.ViewEvent.EventPageCheckout', $data);
     }
@@ -352,33 +352,38 @@ class EventCheckoutController extends Controller
 
     public function showEventPayment(Request $request, $event_id)
     {
-        $order_session = session()->get('ticket_order_' . $event_id);
-        $event = Event::findOrFail($event_id);
+        try {
+            $order_session = session()->get('ticket_order_' . $event_id);
+            $event = Event::findOrFail($event_id);
 
-        $payment_gateway = $order_session['payment_gateway'];
-        $order_total = $order_session['order_total'];
-        $account_payment_gateway = $order_session['account_payment_gateway'];
+            $payment_gateway = $order_session['payment_gateway'];
+            $order_total = $order_session['order_total'];
+            $account_payment_gateway = $order_session['account_payment_gateway'];
 
-        $orderService = new OrderService($order_session['order_total'], $order_session['total_booking_fee'], $event);
-        $orderService->calculateFinalCosts();
+            $orderService = new OrderService($order_session['order_total'], $order_session['total_booking_fee'], $event);
+            $orderService->calculateFinalCosts();
 
-        $payment_failed = $request->get('is_payment_failed') ? 1 : 0;
+            $payment_failed = $request->get('is_payment_failed') ? 1 : 0;
 
-        $secondsToExpire = Carbon::now()->diffInSeconds($order_session['expires']);
+            $secondsToExpire = Carbon::now()->diffInSeconds($order_session['expires']);
 
-        $viewData = [
-            'event' => $event,
-            'tickets' => $order_session['tickets'],
-            'order_total' => $order_total,
-            'orderService' => $orderService,
-            'order_requires_payment'  => PaymentUtils::requiresPayment($order_total),
-            'account_payment_gateway' => $account_payment_gateway,
-            'payment_gateway' => $payment_gateway,
-            'secondsToExpire' => $secondsToExpire,
-            'payment_failed' => $payment_failed
-        ];
+            $viewData = [
+                'event' => $event,
+                'tickets' => $order_session['tickets'],
+                'order_total' => $order_total,
+                'orderService' => $orderService,
+                'order_requires_payment'  => PaymentUtils::requiresPayment($order_total),
+                'account_payment_gateway' => $account_payment_gateway,
+                'payment_gateway' => $payment_gateway,
+                'secondsToExpire' => $secondsToExpire,
+                'payment_failed' => $payment_failed
+            ];
 
-        return view('Public.ViewEvent.EventPagePayment', $viewData);
+            return view('Public.ViewEvent.EventPagePayment', $viewData);
+        } catch (\Throwable $th) {
+            \Log::info("an error occurred in the showEventPayment", [$th]);
+            throw $th;
+        }
     }
 
     /**
