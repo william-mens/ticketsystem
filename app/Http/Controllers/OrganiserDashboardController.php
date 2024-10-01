@@ -37,7 +37,6 @@ class OrganiserDashboardController extends MyBaseController
             'upcoming_events' => $upcoming_events,
             'calendar_events' => json_encode($calendar_events),
         ];
-
         return view('ManageOrganiser.Dashboard', $data);
     }
 }

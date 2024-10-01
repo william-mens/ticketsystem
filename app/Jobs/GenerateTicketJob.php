@@ -14,6 +14,12 @@ class GenerateTicketJob extends GenerateTicketsJobBase
      *
      * @return void
      */
+
+    public $order;
+    public $attendees;
+    public $event;
+    public $file_name;
+
     public function __construct(Attendee $attendee)
     {
         $this->attendees = [$attendee];
