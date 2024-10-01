@@ -252,7 +252,6 @@ class EventCheckoutController extends Controller
     public function showEventCheckout(Request $request, $event_id)
     {
         $order_session = session()->get('ticket_order_' . $event_id);
-        \Log::info("checking order sesssion", [$order_session]);
 
         if (!$order_session || $order_session['expires'] < Carbon::now()) {
             $route_name = $this->is_embedded ? 'showEmbeddedEventPage' : 'showEventPage';
@@ -262,7 +261,6 @@ class EventCheckoutController extends Controller
         $secondsToExpire = Carbon::now()->diffInSeconds($order_session['expires']);
 
         $event = Event::findorFail($order_session['event_id']);
-        \Log::info("checking event from show Event Checkout", [$event]);
         $orderService = new OrderService($order_session['order_total'], $order_session['total_booking_fee'], $event);
         $orderService->calculateFinalCosts();
 
@@ -273,7 +271,6 @@ class EventCheckoutController extends Controller
             'orderService'    => $orderService
         ];
 
-        \Log::info("EventPageCheckout data response show Event Checkout", [$data]);
 
         \Log::info("is embedd response", [$this->is_embedded]);
 
