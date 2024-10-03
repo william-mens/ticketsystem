@@ -29,6 +29,9 @@ class GenerateTicketsJobBase implements ShouldQueue
         $file_path = public_path(config('attendize.event_pdf_tickets_path')) . '/' . $this->file_name;
         $file_with_ext = $file_path . '.pdf';
 
+        Log::info("PDF will be saved to: " . $file_path);
+
+
         if (file_exists($file_with_ext)) {
             Log::info("Use ticket from cache: " . $file_with_ext);
             return;

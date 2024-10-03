@@ -1,4 +1,6 @@
-<?php namespace App\Models;
+<?php
+
+namespace App\Models;
 
 use File;
 use Illuminate\Database\Eloquent\Collection;
@@ -168,6 +170,7 @@ class Order extends MyBaseModel
      */
     public function generatePdfTickets()
     {
+        \Log::info("called the generatePdfTickets php method on Order.php file");
         $data = [
             'order'     => $this,
             'event'     => $this->event,
@@ -188,8 +191,13 @@ class Order extends MyBaseModel
             File::makeDirectory(dirname($pdf_file_path), 0777, true, true);
         }
 
-        PDF::setOutputMode('F'); // force to file
-        PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, $pdf_file_path);
+        // PDF::setOutputMode('F'); // force to file
+        // PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, $pdf_file_path);
+        $pdf = \PDF::loadView('Public.ViewEvent.Partials.PDFTicket', $data);
+
+        // Save the PDF to the specified path
+        $pdf->save($pdf_file);
+
 
         $this->ticket_pdf_path = config('attendize.event_pdf_tickets_path') . '/' . $this->order_reference . '.pdf';
         $this->save();
@@ -206,13 +214,13 @@ class Order extends MyBaseModel
 
         static::creating(function ($order) {
             do {
-                    //generate a random string using Laravel's Str::Random helper
-                    $token = Str::Random(5) . date('jn');
+                //generate a random string using Laravel's Str::Random helper
+                $token = Str::Random(5) . date('jn');
             } //check if the token already exists and if it does, try again
 
-			while (Order::where('order_reference', $token)->first());
+            while (Order::where('order_reference', $token)->first());
             $order->order_reference = $token;
-		});
+        });
     }
 
     /**
