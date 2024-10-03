@@ -82,7 +82,7 @@ return [
 
     'locale' => 'en',
 
-     /*
+    /*
     |--------------------------------------------------------------------------
     | Application Locale Direction Configuration
     |--------------------------------------------------------------------------
@@ -192,6 +192,8 @@ return [
         App\Providers\HtmlMacroServiceProvider::class,
         App\Providers\HelpersServiceProvider::class,
         Nitmedia\Wkhtml2pdf\L5Wkhtml2pdfServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+
 
     ],
 
@@ -246,7 +248,8 @@ return [
 
         // Attendize Class Alias
         'Markdown'     => GrahamCampbell\Markdown\Facades\Markdown::class,
-        'PDF'          => Nitmedia\Wkhtml2pdf\Facades\Wkhtml2pdf::class,
+        // 'PDF'          => Nitmedia\Wkhtml2pdf\Facades\Wkhtml2pdf::class,
+        'PDF'          => Barryvdh\DomPDF\Facade::class,
         'Utils'        => App\Attendize\Utils::class,
         'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
     ],
