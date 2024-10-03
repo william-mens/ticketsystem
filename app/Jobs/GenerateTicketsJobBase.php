@@ -51,10 +51,11 @@ class GenerateTicketsJobBase implements ShouldQueue
             'images'    => $images,
         ];
         try {
-            PDF::setOutputMode('F'); // force to file
-            PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, $file_path);
+            // PDF::setOutputMode('F'); // force to file
+            PDF::loadView('Public.ViewEvent.Partials.PDFTicket', $data, $file_path);
             Log::info("Ticket generated!");
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
+            Log::error("Full error stact", [$e]);
             Log::error("Error generating ticket. This can be due to permissions on vendor/nitmedia/wkhtml2pdf/src/Nitmedia/Wkhtml2pdf/lib. This folder requires write and execute permissions for the web user");
             Log::error("Error message. " . $e->getMessage());
             Log::error("Error stack trace" . $e->getTraceAsString());
