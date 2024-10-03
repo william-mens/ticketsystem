@@ -4587,7 +4587,7 @@ function log() {
         },
         error: function (data, statusText, xhr, $form) {
             $submitButton = $form.find('input[type=submit]');
-
+            console.log('error data',data+'Actual error' +`${xhr}`)
             // Form validation error.
             if (422 == data.status) {
                 processFormErrors($form, $.parseJSON(data.responseText));
@@ -4603,6 +4603,8 @@ function log() {
             if (data.message) {
                 showMessage(data.message);
             }
+
+            console.log('success data',data)
 
             switch (data.status) {
                 case 'success':
