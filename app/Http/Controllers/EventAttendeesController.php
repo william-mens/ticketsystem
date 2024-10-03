@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App\Cancellation\OrderCancellation;
 use App\Exports\AttendeesExport;
@@ -96,7 +98,7 @@ class EventAttendeesController extends MyBaseController
          * @todo This is a bit hackish
          */
         if ($event->tickets->count() === 0) {
-            return '<script>showMessage("'.trans("Controllers.addInviteError").'");</script>';
+            return '<script>showMessage("' . trans("Controllers.addInviteError") . '");</script>';
         }
 
         return view('ManageEvent.Modals.InviteAttendee', [
@@ -222,7 +224,6 @@ class EventAttendeesController extends MyBaseController
                     'event_id' => $event_id,
                 ]),
             ]);
-
         } catch (Exception $e) {
 
             Log::error($e);
@@ -233,7 +234,6 @@ class EventAttendeesController extends MyBaseController
                 'error'  => trans("Controllers.attendee_exception")
             ]);
         }
-
     }
 
     /**
@@ -252,7 +252,7 @@ class EventAttendeesController extends MyBaseController
          * @todo This is a bit hackish
          */
         if ($event->tickets->count() === 0) {
-            return '<script>showMessage("'.trans("Controllers.addInviteError").'");</script>';
+            return '<script>showMessage("' . trans("Controllers.addInviteError") . '");</script>';
         }
 
         return view('ManageEvent.Modals.ImportAttendee', [
@@ -286,7 +286,6 @@ class EventAttendeesController extends MyBaseController
                 'status'   => 'error',
                 'messages' => $validator->messages()->toArray(),
             ]);
-
         }
 
         $event = Event::findOrFail($event_id);
@@ -528,7 +527,7 @@ class EventAttendeesController extends MyBaseController
         $attendee = Attendee::scope()->findOrFail($attendee_id);
         $attendee->update($request->all());
 
-        session()->flash('message',trans("Controllers.successfully_updated_attendee"));
+        session()->flash('message', trans("Controllers.successfully_updated_attendee"));
 
         return response()->json([
             'status'      => 'success',
@@ -597,7 +596,7 @@ class EventAttendeesController extends MyBaseController
 
         if ($request->get('notify_attendee') == '1') {
             try {
-                Mail::send(Lang::locale().'.Emails.notifyCancelledAttendee', $data, function ($message) use ($attendee) {
+                Mail::send(Lang::locale() . '.Emails.notifyCancelledAttendee', $data, function ($message) use ($attendee) {
                     $message->to($attendee->email, $attendee->full_name)
                         ->from(config('attendize.outgoing_email_noreply'), $attendee->event->organiser->name)
                         ->replyTo($attendee->event->organiser->email, $attendee->event->organiser->name)
@@ -611,11 +610,11 @@ class EventAttendeesController extends MyBaseController
 
         try {
             // Let the user know that they have received a refund.
-            Mail::send(Lang::locale().'.Emails.notifyRefundedAttendee', $data, function ($message) use ($attendee) {
+            Mail::send(Lang::locale() . '.Emails.notifyRefundedAttendee', $data, function ($message) use ($attendee) {
                 $message->to($attendee->email, $attendee->full_name)
                     ->from(config('attendize.outgoing_email_noreply'), $attendee->event->organiser->name)
                     ->replyTo($attendee->event->organiser->email, $attendee->event->organiser->name)
-                    ->subject(trans("Email.refund_from_name", ["name"=>$attendee->event->organiser->name]));
+                    ->subject(trans("Email.refund_from_name", ["name" => $attendee->event->organiser->name]));
             });
         } catch (\Exception $e) {
             Log::error($e);
@@ -692,11 +691,9 @@ class EventAttendeesController extends MyBaseController
         ];
 
         if ($request->get('download') == '1') {
-            return PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, 'Tickets');
+            return PDF::loadView('Public.ViewEvent.Partials.PDFTicket', $data);
+            // return PDF::html('Public.ViewEvent.Partials.PDFTicket', $data, 'Tickets');
         }
         return view('Public.ViewEvent.Partials.PDFTicket', $data);
     }
-
 }
-
-
