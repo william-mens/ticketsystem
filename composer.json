@@ -13,8 +13,9 @@
     "require": {
         "php": "^8.0",
         "ext-json": "*",
+        "barryvdh/laravel-dompdf": "^3.0",
         "doctrine/dbal": "^2.9",
-        "dompdf/dompdf": "^0.8",
+        "dompdf/dompdf": "^3.0",
         "graham-campbell/markdown": "*",
         "guzzlehttp/guzzle": "^7.0",
         "guzzlehttp/psr7": "^1.6",
