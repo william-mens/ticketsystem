@@ -4587,7 +4587,10 @@ function log() {
         },
         error: function (data, statusText, xhr, $form) {
             $submitButton = $form.find('input[type=submit]');
-            console.log('error data',data+'Actual error' +`${xhr}`)
+            console.log('error data',JSON.stringify(data))
+            console.log('xhr data',JSON.stringify(xhr))
+
+
             // Form validation error.
             if (422 == data.status) {
                 processFormErrors($form, $.parseJSON(data.responseText));
