@@ -101,11 +101,21 @@
                             </div>
                         </div>
                         <div class="barcode">
-                            {!! DNS2D::getBarcodeSVG($attendee->private_reference_number, "QRCODE", 6, 6) !!}
+                            /* {!! DNS2D::getBarcodeSVG($attendee->private_reference_number, "QRCODE", 6, 6) !!} */
+                        @php
+                            $qrCodeSvg = DNS2D::getBarcodeSVG($attendee->private_reference_number, "QRCODE", 6, 6);
+                            $qrCodeBase64 = base64_encode($qrCodeSvg);
+                        @endphp
+                        <img src="data:image/svg+xml;base64,{{ $qrCodeBase64 }}" alt="QR Code" />
                         </div>
                         @if($event->is_1d_barcode_enabled)
                         <div class="barcode_vertical">
-                            {!! DNS1D::getBarcodeSVG($attendee->private_reference_number, "C39+", 1, 50) !!}
+                            /* {!! DNS1D::getBarcodeSVG($attendee->private_reference_number, "C39+", 1, 50) !!} */
+                        @php
+                            $barcodeSvg = DNS1D::getBarcodeSVG($attendee->private_reference_number, "C39+", 1, 50);
+                            $barcodeBase64 = base64_encode($barcodeSvg);
+                        @endphp
+                        <img src="data:image/svg+xml;base64,{{ $barcodeBase64 }}" alt="1D Barcode" />
                         </div>
                         @endif
                     </div>

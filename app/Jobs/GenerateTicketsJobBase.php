@@ -56,8 +56,8 @@ class GenerateTicketsJobBase implements ShouldQueue
         try {
             // PDF::setOutputMode('F'); // force to file
             $pdf = PDF::loadView('Public.ViewEvent.Partials.PDFTicket', $data);
-            $viewHtml = view('Public.ViewEvent.Partials.PDFTicket', $data)->render();
-            Log::info("Generated HTML: " . $viewHtml);
+            // $viewHtml = view('Public.ViewEvent.Partials.PDFTicket', $data)->render();
+            // Log::info("Generated HTML: " . $viewHtml);
             $pdf->save($file_with_ext);
             Log::info("Ticket generated!");
         } catch (\Exception $e) {
