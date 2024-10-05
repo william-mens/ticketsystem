@@ -155,7 +155,7 @@ class TicketApiController extends Controller
     {
         \Log::info("expiry_date", [$verifyAttendee->expiry]);
 
-        $expiry = Carbon::createFromFormat($verifyAttendee->expiry);
+        $expiry = Carbon::createFromFormat('Y-m-d H:i:s', $verifyAttendee->expiry);
         \Log::info("checking expiry infomation", [$expiry]);
 
         // If the ticket has expired, mark it as inactive
