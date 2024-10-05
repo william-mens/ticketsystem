@@ -62,4 +62,5 @@ Route::resource('attendees', API\AttendeesApiController::class);
 
 Route::group(['prefix' => 'v1'], function () {
     Route::post('/purchase-tickets', [TicketApiController::class, 'store']);
+    Route::post('/verify-tickets', [TicketApiController::class, 'verify']);
 });
