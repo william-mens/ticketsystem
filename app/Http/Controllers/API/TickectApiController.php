@@ -103,7 +103,7 @@ class TicketApiController extends Controller
             $attendee->reference_index = 1;
             $attendee->ticket_type = $request->get("ticket_type") ?? "single";
             $attendee->expiry = ($request->get("ticket_type") === 'multi_entry')
-                ?  Carbon::createFromFormat('Y-m-d H:i:s', $request->get('expiry'))->timestamp
+                ?  Carbon::createFromFormat('Y-m-d H:i:s', $request->get('expiry'))->toDateTimeString()
                 : NULL;
             $attendee->phone_number = $request->get("phone_number");
             $attendee->status = "active";
