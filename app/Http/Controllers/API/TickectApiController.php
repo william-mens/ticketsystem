@@ -132,6 +132,7 @@ class TicketApiController extends Controller
             if (!$verifyAttendee) {
                 return $this->validationFailed([], "InvalidRefNumber");
             }
+            \Log::info("attendee status here", [$verifyAttendee]);
 
             // Handle based on the ticket type
             if ($verifyAttendee->ticket_type === 'single') {
@@ -152,7 +153,10 @@ class TicketApiController extends Controller
     }
     private function handleMultiEntryTicket($verifyAttendee)
     {
+        \Log::info("expiry_date", [$verifyAttendee]);
+
         $expiry = Carbon::createFromTimestamp($verifyAttendee->expiry);
+        \Log::info("checking expiry infomation", [$expiry]);
 
         // If the ticket has expired, mark it as inactive
         if ($expiry->isPast()) {
