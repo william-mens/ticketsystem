@@ -1,4 +1,6 @@
-<?php namespace App\Models;
+<?php
+
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,7 +31,10 @@ class Attendee extends MyBaseModel
         'account_id',
         'reference',
         'has_arrived',
-        'arrival_time'
+        'arrival_time',
+        'ticket_type',
+        'expiry',
+        'status'
     ];
 
     protected $casts = [
@@ -55,7 +60,6 @@ class Attendee extends MyBaseModel
             while (Attendee::where('private_reference_number', $token)->first());
             $order->private_reference_number = $token;
         });
-
     }
 
     /**

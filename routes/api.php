@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\TicketApiController;
 use Illuminate\Http\Request;
 
 /*
@@ -57,3 +58,8 @@ Route::resource('attendees', API\AttendeesApiController::class);
  * Check-In / Check-Out
  * ---------------
  */
+
+
+Route::group(['prefix' => 'v1'], function () {
+    Route::post('/purchase-tickets', [TicketApiController::class, 'store']);
+});
