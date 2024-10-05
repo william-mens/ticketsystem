@@ -153,9 +153,9 @@ class TicketApiController extends Controller
     }
     private function handleMultiEntryTicket($verifyAttendee)
     {
-        \Log::info("expiry_date", [$verifyAttendee]);
+        \Log::info("expiry_date", [$verifyAttendee->expiry]);
 
-        $expiry = Carbon::createFromTimestamp($verifyAttendee->expiry);
+        $expiry = Carbon::createFromFormat($verifyAttendee->expiry);
         \Log::info("checking expiry infomation", [$expiry]);
 
         // If the ticket has expired, mark it as inactive
