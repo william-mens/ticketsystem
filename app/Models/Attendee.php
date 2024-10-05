@@ -34,7 +34,8 @@ class Attendee extends MyBaseModel
         'arrival_time',
         'ticket_type',
         'expiry',
-        'status'
+        'status',
+        'phone_number'
     ];
 
     protected $casts = [

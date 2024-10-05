@@ -13,6 +13,7 @@ use App\Models\OrderItem;
 use App\Models\EventStats;
 use App\Models\Attendee;
 use Exception;
+use Carbon\Carbon;
 use Log;
 
 
@@ -21,15 +22,17 @@ class TicketApiController extends Controller
 
     public function store(Request $request)
     {
-
-        $ticket_id = $request->get('ticket_id');
-        $event = Event::find(1);
-        $ticket_price = 0;
-        $attendee_first_name = $request->get('name');
-        $attendee_last_name = $request->get('name');
-        $attendee_email = $request->get('email');
         $event_id  = $request->get("event_id") ?? 1;
         $account_id = $request->get("account_id") ?? 1;
+        $name = $request->get('name');
+        $nameParts = preg_split('/\s+/', $name, 2);
+
+
+        $ticket_id = $request->get('ticket_id');
+        $event = Event::find($event_id);
+        $attendee_first_name = $nameParts[0] ?? '';
+        $attendee_last_name = $nameParts[1] ?? '';
+        $attendee_email = $request->get('email');
 
         DB::beginTransaction();
 
@@ -38,6 +41,9 @@ class TicketApiController extends Controller
             /*
              * Create the order
              */
+
+            $ticket_price = $request->get('ticket_price');
+
             $order = new Order();
             $order->first_name = $attendee_first_name;
             $order->last_name = $attendee_last_name;
@@ -62,6 +68,7 @@ class TicketApiController extends Controller
              * Update qty sold
              */
             $ticket = Ticket::scope()->find($ticket_id);
+
             $ticket->increment('quantity_sold');
             $ticket->increment('sales_volume', $ticket_price);
 
@@ -70,7 +77,7 @@ class TicketApiController extends Controller
              */
             $orderItem = new OrderItem();
             $orderItem->title = $ticket->title;
-            $orderItem->quantity = 1;
+            $orderItem->quantity = $request->get('ticket_quantity');
             $orderItem->order_id = $order->id;
             $orderItem->unit_price = $ticket_price;
             $orderItem->save();
@@ -79,7 +86,7 @@ class TicketApiController extends Controller
              * Update the event stats
              */
             $event_stats = new EventStats();
-            $event_stats->updateTicketsSoldCount($event_id, 1);
+            $event_stats->updateTicketsSoldCount($event_id, $request->get('ticket_quantity'));
             $event_stats->updateTicketRevenue($ticket_id, $ticket_price);
 
             /*
@@ -95,7 +102,10 @@ class TicketApiController extends Controller
             $attendee->account_id = $account_id;
             $attendee->reference_index = 1;
             $attendee->ticket_type = $request->get("ticket_type") ?? "single";
-            $attendee->expiry = ($request->get("ticket_type") === 'multi_entry') ? $request->get("expiry_date") : NULL;
+            $attendee->expiry = ($request->get("ticket_type") === 'multi_entry')
+                ?  Carbon::createFromFormat('Y-m-d H:i:s', $request->get('expiry'))->timestamp
+                : NULL;
+            $attendee->phone_number = $request->get("phone_number");
             $attendee->status = "active";
 
             $attendee->save();
@@ -111,7 +121,62 @@ class TicketApiController extends Controller
         }
     }
 
-    public function verify(Request $request) {}
+    public function verify(Request $request)
+    {
+        try {
+            $privateRefNumber = $request->get("private_reference_number");
 
+            $verifyAttendee = Attendee::where("private_reference_number", $privateRefNumber)->first();
+
+
+            if (!$verifyAttendee) {
+                return $this->validationFailed([], "InvalidRefNumber");
+            }
+
+            // Handle based on the ticket type
+            if ($verifyAttendee->ticket_type === 'single') {
+                return $this->handleSingleTicket($verifyAttendee);
+            }
+
+            if ($verifyAttendee->ticket_type === 'multi_entry') {
+                return $this->handleMultiEntryTicket($verifyAttendee);
+            }
+
+            // Fallback if no valid ticket type is found
+            return $this->validationFailed([], "Invalid ticket type");
+        } catch (Exception $e) {
+            Log::error("an error occurred verifying  tickets", [$e]);
+            throw $e;
+            return $this->error();
+        }
+    }
+    private function handleMultiEntryTicket($verifyAttendee)
+    {
+        $expiry = Carbon::createFromTimestamp($verifyAttendee->expiry);
+
+        // If the ticket has expired, mark it as inactive
+        if ($expiry->isPast()) {
+            $verifyAttendee->status = "inactive";
+            $verifyAttendee->save();
+            return $this->validationFailed([], "Ticket has expired");
+        }
+
+        // Allow the use of the multi-entry ticket without changing its status
+        return $this->success($verifyAttendee);
+    }
+
+    private function handleSingleTicket($verifyAttendee)
+    {
+        // Check if the ticket is already used
+        if ($verifyAttendee->status === 'inactive') {
+            return $this->validationFailed([], "Ticket has already been used");
+        }
+
+        // Mark the single-use ticket as inactive
+        $verifyAttendee->status = "inactive";
+        $verifyAttendee->save();
+
+        return $this->success($verifyAttendee);
+    }
     public function destroy(Request $request) {}
 }
