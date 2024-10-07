@@ -254,4 +254,11 @@ return [
         'Excel'        => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
+    'sms' => [
+        'apiKey' => env('SMS_API_KEY'),
+        'senderId' => env('SMS_SENDER_ID'),
+        'url' => env('SMS_URL'),
+        'customSMSMessage' => env('SMS_MESSAGE')
+    ],
+
 ];

@@ -12,6 +12,7 @@ use App\Models\Ticket;
 use App\Models\OrderItem;
 use App\Models\EventStats;
 use App\Models\Attendee;
+use App\TextMessaging;
 use Exception;
 use Carbon\Carbon;
 use Log;
@@ -111,6 +112,18 @@ class TicketApiController extends Controller
             $attendee->save();
 
             DB::commit();
+
+            $smsMessage = config('app.sms.customSMSMessage');
+            $ticketUrl = route('showOrderWithAttendeeRef', ['order_reference' => $order->order_reference]);
+            $companyName = "Attendize";
+            $sendMessage = str_replace(
+                ['${customerName},${ticketURL},${companyName}'],
+                [$request->get("name"), $ticketUrl, $companyName],
+                $smsMessage
+            );
+            \Log::info("inspecting message to be drafted before sending it", [$sendMessage]);
+            //todo send sms later would make its a job
+            (new TextMessaging)->sendTextMessage($sendMessage, $request->get("phone_number"));
             return $this->success($attendee);
         } catch (Exception $e) {
 

@@ -794,6 +794,29 @@ class EventCheckoutController extends Controller
         return view('Public.ViewEvent.EventPageViewOrder', $data);
     }
 
+    //new order pay
+    public function showOrderWithAttendeeRef(Request $request, $order_reference)
+    {
+
+        $order = Order::where('order_reference', '=', $order_reference)->first();
+
+        if (!$order) {
+            abort(404);
+        }
+
+        $orderService = new OrderService($order->amount, $order->organiser_booking_fee, $order->event);
+        $orderService->calculateFinalCosts();
+
+        $data = [
+            'order'        => $order,
+            'orderService' => $orderService,
+            'event'        => $order->event,
+            'tickets'      => $order->event->tickets,
+            'is_embedded'  => $this->is_embedded,
+        ];
+        return view('Public.ViewEvent.EventViewOrder', $data);
+    }
+
     /**
      * Shows the tickets for an order - either HTML or PDF
      *
