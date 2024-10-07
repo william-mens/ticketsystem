@@ -12,7 +12,7 @@ class TextMessaging
     {
         Log::info('Sending text message');
         $api_key = config('app.sms.apiKey');
-        $source = config('app.sms.sendId');
+        $source = config('app.sms.senderId');
 
         $recipients = $msisdn;
         Log::info('Sending text message', [$api_key, $source, $recipients]);
