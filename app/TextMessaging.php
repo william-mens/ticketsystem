@@ -13,12 +13,13 @@ class TextMessaging
         Log::info('Sending text message');
         $api_key = config('app.sms.apiKey');
         $source = config('app.sms.sendId');
-        $async = 0;
+
         $recipients = $msisdn;
+        Log::info('Sending text message', [$api_key, $source, $recipients]);
 
         // $message = str_replace('','',$message); api_key=${smsApiKey}&to=${phoneNumber}&from=${senderId}&sms=${smsMessage}
         $message = urlencode($message);
-        $url = config('app.sms.url') . "api_key=$api_key&sms=$message&to=$recipients&from=$source";
+        $url = config('app.sms.url') . "&api_key=$api_key&to=$recipients&from=$source&sms=$message";
         try {
             $recipients = $msisdn;
             $request = Http::timeout(3)->get($url);

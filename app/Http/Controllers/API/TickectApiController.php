@@ -117,10 +117,11 @@ class TicketApiController extends Controller
             $ticketUrl = route('showOrderWithAttendeeRef', ['order_reference' => $order->order_reference]);
             $companyName = "Attendize";
             $sendMessage = str_replace(
-                ['${customerName},${ticketURL},${companyName}'],
+                ['${customerName}', '${ticketURL}', '${companyName}'],
                 [$request->get("name"), $ticketUrl, $companyName],
                 $smsMessage
             );
+
             \Log::info("inspecting message to be drafted before sending it", [$sendMessage]);
             //todo send sms later would make its a job
             (new TextMessaging)->sendTextMessage($sendMessage, $request->get("phone_number"));
