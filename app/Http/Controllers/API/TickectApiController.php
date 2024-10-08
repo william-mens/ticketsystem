@@ -115,7 +115,7 @@ class TicketApiController extends Controller
 
             $smsMessage = config('app.sms.customSMSMessage');
             $ticketUrl = route('showOrderWithAttendeeRef', ['order_reference' => $order->order_reference]);
-            $companyName = "Attendize";
+            $companyName = "Ghud Park";
             $sendMessage = str_replace(
                 ['${customerName}', '${ticketURL}', '${companyName}'],
                 [$request->get("name"), $ticketUrl, $companyName],

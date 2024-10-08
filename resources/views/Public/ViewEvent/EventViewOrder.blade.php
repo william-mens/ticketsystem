@@ -2,9 +2,11 @@
 
 @section('content')
 
-@include('Public.ViewEvent.Partials.EventHeaderSection')
-@include('Public.ViewEvent.Partials.EventShareSection')
-@include('Public.ViewEvent.Partials.EventOrderViewSection')
-@include('Public.ViewEvent.Partials.EventFooterSection')
+@include('Public.ViewEvent.Partials.EventNewHeaderSection')
+@include('Public.ViewEvent.Partials.EventNewShareSection')
+@include('Public.ViewEvent.Partials.EventNewViewOrderSection')
+@include('Public.ViewEvent.Partials.EventNewFooterSection')
 
 @stop
+
+<!-- EventNewHeaderSection -->
