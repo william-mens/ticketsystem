@@ -73,7 +73,7 @@
             <span class="massive-icon">
                 <i class="ico ico-checkmark-circle"></i>
             </span>
-            <!-- <h1>{{ @trans("Public_ViewEvent.thank_you_for_your_order") }}</h1> -->
+            <h1>{{ @trans("Public_ViewEvent.thank_you_for_your_order") }}</h1>
             <h2>
                 {{ @trans("Public_ViewEvent.your") }}
                 <a class="ticket_download_link"
