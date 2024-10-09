@@ -134,7 +134,6 @@
                         <div class="col-sm-4 col-xs-6">
                             <b>@lang("Public_ViewEvent.email")</b><br>
                         </div>
-                        @endif
                     </div>
                 </div>
 
