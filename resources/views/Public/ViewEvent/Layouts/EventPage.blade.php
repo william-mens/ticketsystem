@@ -127,7 +127,7 @@
     </script>
     @endif
 
-    /* @include('Shared.Partials.GlobalFooterJS') */
+    @include('Shared.Partials.GlobalFooterJS')
 </body>
 
 </html>
