@@ -117,7 +117,7 @@
                         </div>
 
                         <div class="col-sm-4 col-xs-6">
-                            <b>@lang("Public_ViewEvent.amount")</b><br> GHS{{number_format($order->total_amount, 2)}}
+                            <b>@lang("Public_ViewEvent.amount")</b><br>{{number_format($order->total_amount, 2)}}
                             @if($event->organiser->charge_tax)
                             <small>{{ $orderService->getVatFormattedInBrackets() }}</small>
                             @endif
@@ -306,7 +306,7 @@
                                     {{$attendee->first_name}}
                                     {{$attendee->last_name}}
                                     {{$attendee->phone_number}}
-                                    (<a href="mailto:{{$attendee->email}}">{{$attendee->email ?? ''}}</a>)
+                                    (<a href="mailto:{{$attendee->email}}">{{$attendee->email}}</a>)
                                 </td>
                                 <td>
                                     {{{$attendee->ticket->title}}}
