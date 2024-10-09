@@ -5,7 +5,7 @@
 @include('Public.ViewEvent.Partials.EventNewHeaderSection')
 @include('Public.ViewEvent.Partials.EventNewShareSection')
 @include('Public.ViewEvent.Partials.EventNewViewOrderSection')
-<!-- @include('Public.ViewEvent.Partials.EventNewFooterSection') -->
+@include('Public.ViewEvent.Partials.EventNewFooterSection')
 
 @stopEvent
 
