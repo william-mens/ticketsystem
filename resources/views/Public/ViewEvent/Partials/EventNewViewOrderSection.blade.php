@@ -71,41 +71,32 @@
 
 <section id="order_form" class="container">
     <div class="row">
-        <div class="col-md-6">
-            <div class="qr-code">
-                <img src="data:image/svg+xml;base64,{{ $qrCodeBase64 }}" alt="QR Code" />
-            </div>
+        <div class="col-md-12 order_header">
+            <span class="massive-icon">
+                <i class="ico ico-checkmark-circle"></i>
+            </span>
+            <h1>{{ @trans("Public_ViewEvent.thank_you_for_your_order") }}</h1>
+            <h2>
+                {{ @trans("Public_ViewEvent.your") }}
+                <a class="ticket_download_link"
+                    href="{{ route('showOrderTickets', ['order_reference' => $order->order_reference] ).'?download=1' }}">
+                    {{ @trans("Public_ViewEvent.tickets") }}</a> {{ @trans("Public_ViewEvent.confirmation_email") }}
+            </h2>
         </div>
-        @if($event->is_1d_barcode_enabled)
-        <div class="col-md-6">
-            <div class="barcode_vertical">
-                <img src="data:image/svg+xml;base64,{{ $barcodeBase64 }}" alt="1D Barcode" />
-            </div>
+
+        <!-- QR Code Section -->
+        @foreach($order->attendees as $attendee)
+        <div class="qr-code">
+            @php
+            $qrCodeSvg = DNS2D::getBarcodeSVG($attendee->private_reference_number, "QRCODE", 6, 6);
+            $qrCodeBase64 = base64_encode($qrCodeSvg);
+            @endphp
+            <img src="data:image/svg+xml;base64,{{ $qrCodeBase64 }}" alt="QR Code" />
         </div>
-        @endif
+        @endforeach
     </div>
-    <!-- QR Code Section -->
-    @foreach($order->attendees as $attendee)
-    <div class="qr-code">
-        @php
-        $qrCodeSvg = DNS2D::getBarcodeSVG($attendee->private_reference_number, "QRCODE", 6, 6);
-        $qrCodeBase64 = base64_encode($qrCodeSvg);
-        @endphp
-        <img src="data:image/svg+xml;base64,{{ $qrCodeBase64 }}" alt="QR Code" />
     </div>
 
-    @if($event->is_1d_barcode_enabled)
-    <div class="barcode_vertical">
-        @php
-        $barcodeSvg = DNS1D::getBarcodeSVG($attendee->private_reference_number, "C39+", 1, 50);
-        $barcodeBase64 = base64_encode($barcodeSvg);
-        @endphp
-        <img src="data:image/svg+xml;base64,{{ $barcodeBase64 }}" alt="1D Barcode" />
-    </div>
-    @endif
-    </div>
-    </div>
-    @endforeach
 
     <div class="row">
         <div class="col-md-12">
