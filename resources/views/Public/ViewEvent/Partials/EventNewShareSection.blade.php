@@ -12,7 +12,7 @@
                 @if($event->social_show_facebook)
                 <li class="rrssb-facebook" style="height:25px;">
                     <!-- https://www.facebook.com/sharer/sharer.php?u={{$event->event_url}} -->
-                    <a href="#" class="popup" style="display:flex; justify-content:center;">
+                    <a href="#" class="popup" style="display:flex; justify-content:center;align-content:center;vertical-align:middle;">
                         <span class="rrssb-icon">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="28px" height="28px" viewBox="0 0 28 28" enable-background="new 0 0 28 28" xml:space="preserve">
                                 <path d="M27.825,4.783c0-2.427-2.182-4.608-4.608-4.608H4.783c-2.422,0-4.608,2.182-4.608,4.608v18.434
@@ -27,7 +27,7 @@
                 @if($event->social_show_linkedin)
                 <li class="rrssb-linkedin" style="height:25px;">
                     <!-- http://www.linkedin.com/shareArticle?mini=true&amp;url={{$event->event_url}}?title={{urlencode($event->title)}}&amp;summary={{{Str::words(md_to_str($event->description), 20)}}} -->
-                    <a href="#" class="popup" style="display:flex; justify-content:center;">
+                    <a href="#" class="popup" style="display:flex; justify-content:center;align-content:center;vertical-align:middle;">
                         <span class="rrssb-icon">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="28px" height="28px" viewBox="0 0 28 28" enable-background="new 0 0 28 28" xml:space="preserve">
                                 <path d="M25.424,15.887v8.447h-4.896v-7.882c0-1.979-0.709-3.331-2.48-3.331c-1.354,0-2.158,0.911-2.514,1.803
@@ -44,7 +44,7 @@
                 @if($event->social_show_twitter)
                 <li class="rrssb-twitter" style="height:25px;">
                     <!-- http://twitter.com/intent/tweet?text=Check out: {{$event->event_url}} {{{Str::words(md_to_str($event->description), 20)}}} -->
-                    <a href="#" class="popup" style="display:flex; justify-content:center;">
+                    <a href="#" class="popup" style="display:flex; justify-content:center;align-content:center;vertical-align:middle;">
                         <span class="rrssb-icon">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 width="28px" height="28px" viewBox="0 0 28 28" enable-background="new 0 0 28 28" xml:space="preserve">
@@ -75,7 +75,7 @@
                 @endif
                 @if($event->social_show_email)
                 <li class="rrssb-email" style="height:25px;">
-                    <a href="mailto:?subject=Check This Out&body={{urlencode($event->event_url)}}" style="display:flex; justify-content:center;">
+                    <a href="mailto:?subject=Check This Out&body={{urlencode($event->event_url)}}" style="display:flex; justify-content:center;align-content:center;vertical-align:middle;">
                         <span class="rrssb-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="28px" height="28px" viewBox="0 0 28 28" enable-background="new 0 0 28 28" xml:space="preserve">
                                 <g>
