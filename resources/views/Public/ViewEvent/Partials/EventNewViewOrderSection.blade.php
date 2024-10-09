@@ -49,7 +49,7 @@
 
     .qr-code {
         display: inline-block;
-        margin-left: 20px;
+        margin: 20px auto !important;
         text-align: center;
     }
 
