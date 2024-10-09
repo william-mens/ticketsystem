@@ -78,18 +78,19 @@
                     (Request::input('bg_color_preview') ? '#' .Request::input('bg_color_preview') : $event->bg_color)
                 }
             }
+
+            !important;
         }
     </style>
     @endif
 
     @if (($event->bg_type == 'image' || $event->bg_type == 'custom_image' || Request::input('bg_img_preview')) && !Request::input('bg_color_preview'))
     <style>
-        /* body {
-            background: url("{{Request::input('bg_img_preview') ? URL::to(Request::input('bg_img_preview')): asset(config('attendize.cdn_url_static_assets').'/' .$event->bg_image_path");
-        } */
-
-        /* background-repeat: no-repeat center center fixed; */
-        /* background-size:cover; */
+        body {
+            background: url({{(Request::input('bg_img_preview') ? URL: :to(Request::input('bg_img_preview')): asset(config('attendize.cdn_url_static_assets').'/' .$event->bg_image_path))
+        }}) no-repeat center center fixed;
+        background-size: cover;
+        }
     </style>
     @endif
 
@@ -116,11 +117,8 @@
     @if(isset($secondsToExpire))
     <script>
         if ($('#countdown')) {
-            setCountdown($('#countdown'), {
-
-                $secondsToExpire
-
-            });
+            setCountdown($('#countdown'), 
+            {{$secondsToExpire}});
         }
     </script>
     @endif
