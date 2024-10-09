@@ -48,21 +48,19 @@
     }
 
     .qr-code {
-        display: inline-block;
+        display: block;
         margin: 20px auto !important;
         text-align: center;
     }
 
-    .qr-code img,
-    .barcode_vertical img {
+    .qr-code img {
         max-width: 100%;
         height: auto;
     }
 
     @media (max-width: 768px) {
 
-        .qr-code,
-        .barcode_vertical {
+        .qr-code {
             margin-left: 0;
             text-align: center;
         }
