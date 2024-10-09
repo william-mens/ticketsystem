@@ -7,7 +7,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <ul class="rrssb-buttons clearfix">
+            <ul class="rrssb-buttons clearfix h-25">
 
                 @if($event->social_show_facebook)
                 <li class="rrssb-facebook">
