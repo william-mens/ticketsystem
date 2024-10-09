@@ -7,6 +7,6 @@
 @include('Public.ViewEvent.Partials.EventNewViewOrderSection')
 @include('Public.ViewEvent.Partials.EventNewFooterSection')
 
-@stop
+@stopEvent
 
 <!-- EventNewHeaderSection -->
