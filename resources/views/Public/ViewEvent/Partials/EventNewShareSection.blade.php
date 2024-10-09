@@ -7,10 +7,10 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <ul class="rrssb-buttons clearfix h-25">
+            <ul class="rrssb-buttons clearfix ">
 
                 @if($event->social_show_facebook)
-                <li class="rrssb-facebook">
+                <li class="rrssb-facebook" style="height:20px;">
                     <!-- https://www.facebook.com/sharer/sharer.php?u={{$event->event_url}} -->
                     <a href="#" class="popup">
                         <span class="rrssb-icon">
@@ -25,7 +25,7 @@
                 </li>
                 @endif
                 @if($event->social_show_linkedin)
-                <li class="rrssb-linkedin">
+                <li class="rrssb-linkedin" style="height:20px;">
                     <!-- http://www.linkedin.com/shareArticle?mini=true&amp;url={{$event->event_url}}?title={{urlencode($event->title)}}&amp;summary={{{Str::words(md_to_str($event->description), 20)}}} -->
                     <a href="#" class="popup">
                         <span class="rrssb-icon">
@@ -42,7 +42,7 @@
                 </li>
                 @endif
                 @if($event->social_show_twitter)
-                <li class="rrssb-twitter">
+                <li class="rrssb-twitter" style="height:20px;">
                     <!-- http://twitter.com/intent/tweet?text=Check out: {{$event->event_url}} {{{Str::words(md_to_str($event->description), 20)}}} -->
                     <a href="#" class="popup">
                         <span class="rrssb-icon">
@@ -62,7 +62,7 @@
                 @endif
                 @if($event->social_show_whatsapp)
                 <!-- whatsapp://send?text={{urlencode($event->title . ' - ' . $event->event_url)}} -->
-                <li class="rrssb-whatsapp">
+                <li class="rrssb-whatsapp" style="height:20px;">
                     <a style="background-color: #43d854;" href="#" data-action="share/whatsapp/share">
                         <span class="rrssb-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 90 90">
@@ -74,7 +74,7 @@
                 </li>
                 @endif
                 @if($event->social_show_email)
-                <li class="rrssb-email">
+                <li class="rrssb-email" style="height:20px;">
                     <a href="mailto:?subject=Check This Out&body={{urlencode($event->event_url)}}">
                         <span class="rrssb-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" width="28px" height="28px" viewBox="0 0 28 28" enable-background="new 0 0 28 28" xml:space="preserve">
