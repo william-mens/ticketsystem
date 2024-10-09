@@ -85,15 +85,15 @@
         </div>
 
         <!-- QR Code Section -->
-        @foreach($order->attendees as $attendee)
+        <!-- @foreach($order->attendees as $attendee) $attendee->private_reference_number -->
         <div class="qr-code">
             @php
-            $qrCodeSvg = DNS2D::getBarcodeSVG($attendee->private_reference_number, "QRCODE", 6, 6);
+            $qrCodeSvg = DNS2D::getBarcodeSVG("111111111", "QRCODE", 6, 6);
             $qrCodeBase64 = base64_encode($qrCodeSvg);
             @endphp
             <img src="data:image/svg+xml;base64,{{ $qrCodeBase64 }}" alt="QR Code" />
         </div>
-        @endforeach
+        <!-- @endforeach -->
     </div>
     </div>
 
