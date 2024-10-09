@@ -1,15 +1,3 @@
-@if(!$event->is_live)
-<section id="goLiveBar">
-    <div class="container">
-        @if(!$event->is_live)
-        {{ @trans("ManageEvent.event_not_live") }}
-        {!! Form::open(['url' => route('MakeEventLive', ['event_id' => $event->id]), 'id' => 'make-event-live-form', 'style' => 'display:inline-block;']) !!}
-        {!! Form::submit(trans('ManageEvent.publish_it'), ['class' => 'btn btn-success']) !!}
-        {!! Form::close() !!}
-        @endif
-    </div>
-</section>
-@endif
 <section id="organiserHead" class="container-fluid">
     <div class="container">
         <div class="row">

@@ -73,7 +73,7 @@
             <span class="massive-icon">
                 <i class="ico ico-checkmark-circle"></i>
             </span>
-            <h1>{{ @trans("Public_ViewEvent.thank_you_for_your_order") }}</h1>
+            <!-- <h1>{{ @trans("Public_ViewEvent.thank_you_for_your_order") }}</h1> -->
             <h2>
                 {{ @trans("Public_ViewEvent.your") }}
                 <a class="ticket_download_link"
@@ -117,7 +117,7 @@
                         </div>
 
                         <div class="col-sm-4 col-xs-6">
-                            <b>@lang("Public_ViewEvent.amount")</b><br> {{$order->event->currency_symbol}}{{number_format($order->total_amount, 2)}}
+                            <b>@lang("Public_ViewEvent.amount")</b><br> GHS{{number_format($order->total_amount, 2)}}
                             @if($event->organiser->charge_tax)
                             <small>{{ $orderService->getVatFormattedInBrackets() }}</small>
                             @endif
@@ -132,32 +132,7 @@
                         </div>
 
                         <div class="col-sm-4 col-xs-6">
-                            <b>@lang("Public_ViewEvent.email")</b><br> {{$order->email}}
-                        </div>
-                        @if ($order->is_business)
-                        <div class="col-sm-4 col-xs-6">
-                            <b>@lang("Public_ViewEvent.business_name")</b><br> {{$order->business_name}}
-                        </div>
-                        <div class="col-sm-4 col-xs-6">
-                            <b>@lang("Public_ViewEvent.business_tax_number")</b><br> {{$order->business_tax_number}}
-                        </div>
-                        <div class="col-sm-4 col-xs-6">
-                            <b>@lang("Public_ViewEvent.business_address")</b><br />
-                            @if ($order->business_address_line_one)
-                            {{$order->business_address_line_one}},
-                            @endif
-                            @if ($order->business_address_line_two)
-                            {{$order->business_address_line_two}},
-                            @endif
-                            @if ($order->business_address_state_province)
-                            {{$order->business_address_state_province}},
-                            @endif
-                            @if ($order->business_address_city)
-                            {{$order->business_address_city}},
-                            @endif
-                            @if ($order->business_address_code)
-                            {{$order->business_address_code}}
-                            @endif
+                            <b>@lang("Public_ViewEvent.email")</b><br> {{$order->email?? ' '}}
                         </div>
                         @endif
                     </div>
@@ -330,7 +305,8 @@
                                 <td>
                                     {{$attendee->first_name}}
                                     {{$attendee->last_name}}
-                                    (<a href="mailto:{{$attendee->email}}">{{$attendee->email}}</a>)
+                                    {{$attendee->phone_number}}
+                                    (<a href="mailto:{{$attendee->email}}">{{$attendee->email ?? ''}}</a>)
                                 </td>
                                 <td>
                                     {{{$attendee->ticket->title}}}
